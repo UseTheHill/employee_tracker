@@ -154,3 +154,18 @@ async function addEmployee() {
         });
     });
 };
+
+function askName() {
+    return ([
+        {
+            name: "first",
+            type: "input",
+            message: "Enter the first name: "
+        },
+        {
+            name: "last",
+            type: "input",
+            message: "Enter the last name: "
+        }
+    ]);
+};
