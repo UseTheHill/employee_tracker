@@ -169,3 +169,14 @@ function askName() {
         }
     ]);
 };
+
+function askId() {
+    return [
+        {
+            name: "name",
+            type: "input",
+            message: "What is the employee ID?: ",
+        },
+    ];
+};
+
