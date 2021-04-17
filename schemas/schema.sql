@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS "employee_mgmt_db";
-CREATE DATABASE "employee_mgmt_db";
-USE "employee_mgmt_db";
+DROP DATABASE IF EXISTS employee_mgmt_db;
+CREATE DATABASE employee_mgmt_db;
+USE employee_mgmt_db;
 
 CREATE TABLE departments (
     id INT NOT NULL AUTO_INCREMENT,
