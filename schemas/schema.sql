@@ -24,4 +24,15 @@ INSERT INTO roles (title, salary, department_id) values ("Web Developer", "80000
 
 INSERT INTO roles (title, salary, department_id) values ("Software Engineer", "100000", 2)
 
-
+CREATE TABLE employees (
+    id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR (30),
+    last_name VARCHAR(30),
+    role_id INT NOT NULL,
+    manager_id INT NULL,
+    PRIMARY KEY (id),
+    KEY fk_role_id (role_id),
+    CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT ON UPDATE CASCADE, 
+    KEY fk_department_id (manager_id),
+    CONSTRAINT fk_manager_id FOREIGN KEY (manager_id) REFERENCES employees(id)
+);
