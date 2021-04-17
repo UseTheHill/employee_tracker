@@ -8,7 +8,7 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE role (
+CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(10,2) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE employee (
     manager_id INT NULL, 
     CONSTRAINT fk_role_id
     FOREIGN KEY (role_id)
-    REFERENCES role(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    REFERENCES roles(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     PRIMARY KEY (id)
 );
 
@@ -44,3 +44,27 @@ VALUES ("Legal");
 
 INSERT INTO department (name)
 VALUES ("Finance");
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Sales Lead", 100000, 1);
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Salesperson", 80000, 1);
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Lead Engineer", 150000, 2);
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Software Engineer", 120000, 2);
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Accountant", 125000, 3);
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Leagal Team Lead", 255000, 4);
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("lawyer", 190000, 4);
+
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Kayte", "McDonough", 2);
