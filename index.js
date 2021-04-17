@@ -180,3 +180,20 @@ function askId() {
     ];
 };
 
+async function removeEmployee(){
+    const answer = await inquirer.prompt([
+        {
+            name: "id",
+            type: "input",
+            message: "enter the employee ID you want to remove: "
+        }
+    ]);
+
+    connection.query('DELETE FROM employee WHERE ?',
+    {
+        id: answer.id
+    },
+    )
+    console.log('Employee has been removed!');
+    start();
+};
