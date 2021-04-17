@@ -30,3 +30,17 @@ CREATE TABLE employee (
     REFERENCES role(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     PRIMARY KEY (id)
 );
+
+SELECT * FROM department;
+
+INSERT INTO department (name)
+VALUES ("Engineering");
+
+INSERT INTO department (name)
+VALUES ("Sales");
+
+INSERT INTO department (name)
+VALUES ("Legal");
+
+INSERT INTO department (name)
+VALUES ("Finance");
