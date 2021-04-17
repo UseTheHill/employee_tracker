@@ -197,3 +197,41 @@ async function removeEmployee(){
     console.log('Employee has been removed!');
     start();
 };
+
+async function updateRole() {
+    const employeeId = await inquirer.prompt(askId());
+
+    connection.query(
+        "SELECT roles.id, roles.title FROM roles ORDER BY roles.id;",
+        async (err, res) => {
+            if (err) throw err;
+            const { roles } = await.inquirer.prompt([
+                {
+                    name: "roles",
+                    type: "list", 
+                    choices: () => res.map((res) => res.title),
+                    message: "What is the new employee role?: ",
+                },
+            ]);
+
+            let rolesId;
+            for (const row of res) {
+                if (row.title === roles) {
+                    rolesId = row.id;
+                    continue;
+                }
+            }
+            connection.query(
+                `UPDATE employee
+                SET roles_id = ${rolesId}
+                WHERE employee.id = ${employeeId.name}`,
+                async (err, res) => {
+                    if (err) throw err;
+                    console.log("Role was updated.");
+                    start();
+                }
+            );
+        }
+    );
+
+}
