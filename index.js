@@ -91,3 +91,26 @@ const viewManager = () => {
         start();
     });
 };
+
+async function addEmployee() {
+    const addname = await inquirer.prompt(askName());
+    connection.query('SELECT roles.id, roles.title FROM roles ORDER BY roles.id;', async (err, res) => {
+        if (err) throw err;
+        const { roles } = await inquirer.prompt([
+            {
+                name: 'roles',
+                type: 'list',
+                choices: () => res.map(res => res.title),
+                message: 'What is the employee role?: '
+            }
+        ]);
+        let rolesId;
+        for (const row of res) {
+            if (row.title === role) {
+                rolesId = row.id;
+                continue;
+            }
+        }
+        
+    })
+}
