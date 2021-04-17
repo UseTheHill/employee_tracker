@@ -111,6 +111,46 @@ async function addEmployee() {
                 continue;
             }
         }
-        
-    })
-}
+        connection.query('SELECT * FROM employee', async (err, res) => {
+            if (err) throw err;
+            let choices = res.map(res => `${res.first_name} ${res.Last_name}`);
+            choices.push('none');
+            let { manager } = await inquirer.prompt([
+                {
+                    name: 'manager',
+                    type: 'list',
+                    choices: choices,
+                    message: 'choose the employee Manager: '
+                }
+            ]);
+            let managerId;
+            let managerName;
+            if (manager === 'none') {
+                managerId = null;
+            } else {
+                for (const data of res) {
+                    data.fullName = `${data.first_name} ${data.last_name}`;
+                    if (data.fullName === manager) {
+                        managerId = data.id;
+                        managerName = data.fullName;
+                        continue;
+                    }
+                }
+            }
+            console.log('Employee has been added.');
+            connection.query(
+                'INSERT INTO employee SET ?',
+                {
+                    first_name: addname.first,
+                    last_name: addname.last,
+                    roles_id: rolesId,
+                    manager_id: parseInt(managerId)
+                },
+                (err, res) => {
+                    if (err) throw err;
+                    start();
+                }
+            );
+        });
+    });
+};
