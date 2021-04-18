@@ -4,12 +4,12 @@ const consoleTable = require('console.table');
 require("dotenv").config();
 
 const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DATABASE,
-});
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'Tallwater1!',
+    database: 'employee_db',
+  });
 
 connection.connect((err) => {
     if (err) throw err;
@@ -19,32 +19,32 @@ connection.connect((err) => {
 
 const start = () => {
     inquirer
-      .prompt({
+    .prompt({
         name: "startOptions",
         type: "list",
         message: "What would you like to do?",
         choices: ["View All Employees", "View All Employees by Department", "View All Employees by Manager", "Add Employee", "Remove Employee", "Update Employee Role", "Update Employee Manager", "Exit"],
-      })
-      .then((answer) => {
-        if (answer.startOptions === "View All Employees") {
-          viewEmployees();
+    })
+    .then((answer) => {
+    if (answer.startOptions === "View All Employees") {
+        viewEmployees();
         } else if (answer.startOptions === "View All Employees by Department") {
-          viewDepartment();
+            viewDepartment();
         } else if (answer.startOptions === "View All Employees by Manager") {
-          viewManager();
+            viewManager();
         } else if (answer.startOptions === "Add Employee") {
-          addEmployee();
+            addEmployee();
         } else if (answer.startOptions === "Remove Employee") {
-          removeEmployee();
+            removeEmployee();
         } else if (answer.startOptions === "Update Employee Role") {
-          updateRole();
+            updateRole();
         } else if (answer.startOptions === "Update Employee Manager") {
-          updateManager();
+            updateManager();
         } else if (answer.startOptions === "Exit") {
-          connection.end();
+            connection.end();
         }
-      });
-  };
+    });
+};
 
 const viewEmployees = () => {
     const query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager
@@ -98,7 +98,7 @@ async function addEmployee() {
         if (err) throw err;
         const { roles } = await inquirer.prompt([
             {
-                name: 'roles',
+                name: 'role',
                 type: 'list',
                 choices: () => res.map(res => res.title),
                 message: 'What is the employee role?: '
@@ -200,14 +200,13 @@ async function removeEmployee(){
 
 async function updateRole() {
     const employeeId = await inquirer.prompt(askId());
-
     connection.query(
         "SELECT roles.id, roles.title FROM roles ORDER BY roles.id;",
         async (err, res) => {
             if (err) throw err;
             const { roles } = await.inquirer.prompt([
                 {
-                    name: "roles",
+                    name: "role",
                     type: "list", 
                     choices: () => res.map((res) => res.title),
                     message: "What is the new employee role?: ",
